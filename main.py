@@ -16,7 +16,7 @@ GUILD_ID = 1445493059021308079
 
 
 # handler = logging.FileHandler(filename = "discord.log", encoding= "utf-8", mode = "w")
-handler = logging.StreamHnadler()
+handler = logging.StreamHandler()
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -127,3 +127,4 @@ class MyView(discord.ui.View):
 
 # webserver.keep_alive()
 bot.run(DISCORD_TOKEN, log_handler = handler, log_level = logging.DEBUG)
+
