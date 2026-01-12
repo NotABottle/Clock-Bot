@@ -14,7 +14,9 @@ ADMIN_ROLE = "Admin"
 ENTRY_REQUEST_CHANNEL = "entry-requests"
 GUILD_ID = 1445493059021308079
 
-handler = logging.FileHandler(filename = "discord.log", encoding= "utf-8", mode = "w")
+
+# handler = logging.FileHandler(filename = "discord.log", encoding= "utf-8", mode = "w")
+handler = logging.StreamHnadler()
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -38,35 +40,16 @@ async def daily_task():
 
 @bot.event
 async def on_ready():
+    bot.add_view(MyView())
+
+    guild = bot.get_guild(GUILD_ID)
+    if guild:
+        await guild.chunk()
+
     if not daily_task.is_running():
         daily_task.start()
-    print("Bot is now ready")
 
-# @bot.command()
-# async def clockin(ctx):
-#     clockedIn = discord.utils.get(ctx.guild.roles, name = CLOCKED_IN_ROLE)
-#     clockedOut = discord.utils.get(ctx.guild.roles, name = CLOCKED_OUT_ROLE)
-
-#     if ctx.author.get_role(clockedIn.id):
-#         await ctx.send(f"{ctx.author.mention} - You're already clocked in!")
-#     else:
-#         if clockedIn and clockedOut:
-#             await ctx.author.add_roles(clockedIn)
-#             await ctx.author.remove_roles(clockedOut)
-#             await ctx.send(f"{ctx.author.mention} - You have now clocked in!")
-
-# @bot.command()
-# async def clockout(ctx):
-#     clockedIn = discord.utils.get(ctx.guild.roles, name = CLOCKED_IN_ROLE)
-#     clockedOut = discord.utils.get(ctx.guild.roles, name = CLOCKED_OUT_ROLE)
-
-#     if ctx.author.get_role(clockedOut.id):
-#         await ctx.send(f"{ctx.author.mention} - You're already clocked out!")
-#     else:
-#         if clockedIn and clockedOut:
-#             await ctx.author.add_roles(clockedOut)
-#             await ctx.author.remove_roles(clockedIn)
-#             await ctx.send(f"{ctx.author.mention} - You have now clocked out!")
+    print(f"Logged in as {bot.user}")
 
 @bot.command()
 @commands.has_role(ADMIN_ROLE)
@@ -142,6 +125,5 @@ class MyView(discord.ui.View):
                     await member.send(f"Hey {member.mention}! {interaction.user.display_name} has requested access to the building. If you're available, please let them know in #entry-requests")
                     pass
 
-webserver.keep_alive()
-
+# webserver.keep_alive()
 bot.run(DISCORD_TOKEN, log_handler = handler, log_level = logging.DEBUG)
