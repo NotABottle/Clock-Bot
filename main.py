@@ -12,7 +12,7 @@ CLOCKED_IN_ROLE = "Clocked In"
 CLOCKED_OUT_ROLE = "Clocked Out"
 ADMIN_ROLE = "Admin"
 ENTRY_REQUEST_CHANNEL = "entry-requests"
-GUILD_ID = 1459365839701672093
+GUILD_ID = 1445493059021308079
 
 handler = logging.FileHandler(filename = "discord.log", encoding= "utf-8", mode = "w")
 
@@ -143,4 +143,5 @@ class MyView(discord.ui.View):
                     pass
 
 webserver.keep_alive()
+
 bot.run(DISCORD_TOKEN, log_handler = handler, log_level = logging.DEBUG)
