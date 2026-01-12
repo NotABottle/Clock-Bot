@@ -125,6 +125,7 @@ class MyView(discord.ui.View):
                     await member.send(f"Hey {member.mention}! {interaction.user.display_name} has requested access to the building. If you're available, please let them know in #entry-requests")
                     pass
 
-# webserver.keep_alive()
+webserver.keep_alive()
 bot.run(DISCORD_TOKEN, log_handler = handler, log_level = logging.DEBUG)
+
 
